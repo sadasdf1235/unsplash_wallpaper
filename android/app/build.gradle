@@ -1,3 +1,9 @@
+plugins {
+    id "com.android.application"
+    id "kotlin-android"
+    id "dev.flutter.flutter-gradle-plugin"
+}
+
 def localProperties = new Properties()
 def localPropertiesFile = rootProject.file('local.properties')
 if (localPropertiesFile.exists()) {
@@ -21,12 +27,6 @@ if (flutterVersionName == null) {
     flutterVersionName = '1.0'
 }
 
-plugins {
-    id 'com.android.application'
-    id 'kotlin-android'
-    id 'dev.flutter.flutter-gradle-plugin'
-}
-
 android {
     namespace "com.example.unsplash_wallpaper"
     compileSdkVersion flutter.compileSdkVersion
@@ -47,7 +47,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.unsplash_wallpaper"
-        minSdkVersion 21
+        minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
@@ -56,12 +56,30 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.debug
-            minifyEnabled true
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
+flutter {
+    source '../..'
+}
+
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+    constraints {
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version") {
+            because("kotlin-stdlib-jdk7 is now a part of kotlin-stdlib")
+        }
+        implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version") {
+            because("kotlin-stdlib-jdk8 is now a part of kotlin-stdlib")
+        }
+    }
+}
+
+configurations.all {
+    resolutionStrategy {
+        force "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+        force "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    }
 }

@@ -1,5 +1,5 @@
 /// 图片详情页
-/// 
+///
 /// 功能：
 /// 1. 显示高清大图，支持缩放和旋转
 /// 2. 渐进式加载（先显示低分辨率图片，再加载高清图）
@@ -36,28 +36,29 @@ class PhotoDetailPage extends StatefulWidget {
 class _PhotoDetailPageState extends State<PhotoDetailPage> {
   /// 是否正在保存图片
   bool _isSaving = false;
-  
+
   /// 是否正在加载高清图
   bool _isLoadingFull = false;
-  
+
   /// 是否已加载完高清图
   bool _hasLoadedFull = false;
-  
+
   /// 高清图下载进度 (0.0 - 1.0)
   double _downloadProgress = 0;
-  
+
   /// 图片保存进度 (0.0 - 1.0)
   double _saveProgress = 0;
 
   PhotoViewController? _controller;
-  
+
   double _currentScale = 1.0;
   double _currentRotation = 0.0;
 
   @override
   void initState() {
     super.initState();
-    _controller = PhotoViewController()..outputStateStream.listen(_onPhotoViewChanged);
+    _controller = PhotoViewController()
+      ..outputStateStream.listen(_onPhotoViewChanged);
     _loadFullResolution();
   }
 
@@ -75,7 +76,7 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   }
 
   /// 加载高清图
-  /// 
+  ///
   /// 流程：
   /// 1. 下载高清图片数据
   /// 2. 转换为图片提供者
@@ -126,7 +127,7 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   }
 
   /// 分享图片
-  /// 
+  ///
   /// 分享图片信息，包括：
   /// - 标题
   /// - 摄影师信息
@@ -141,7 +142,7 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   }
 
   /// 显示分辨率选择对话框
-  /// 
+  ///
   /// 提供多种分辨率选项：
   /// - HD (1280×720)
   /// - Full HD (1920×1080)
@@ -155,7 +156,11 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
       {'name': 'Full HD (1920×1080)', 'width': 1920, 'height': 1080},
       {'name': '2K (2560×1440)', 'width': 2560, 'height': 1440},
       {'name': '4K (3840×2160)', 'width': 3840, 'height': 2160},
-      {'name': 'Original', 'width': widget.photo.width, 'height': widget.photo.height},
+      {
+        'name': 'Original',
+        'width': widget.photo.width,
+        'height': widget.photo.height
+      },
     ];
 
     final resolution = await showDialog<Map<String, dynamic>>(
@@ -180,7 +185,7 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
                   ),
                 ),
                 subtitle: Text(
-                  (res['name'] as String) == 'Original' 
+                  (res['name'] as String) == 'Original'
                       ? '原始分辨率'
                       : '推荐用于${(res['name'] as String).split(' ')[0]}显示器',
                   style: TextStyle(
@@ -204,11 +209,11 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
   }
 
   /// 保存图片到相册
-  /// 
+  ///
   /// 参数：
   /// - [width] 图片宽度
   /// - [height] 图片高度
-  /// 
+  ///
   /// 流程：
   /// 1. 检查存储权限
   /// 2. 下载指定分辨率的图片
@@ -264,12 +269,15 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
           SnackBar(content: Text(AppLocalizations.of(context)!.saveSuccess)),
         );
       } else {
-        throw Exception(result.errorMessage ?? AppLocalizations.of(context)!.saveFailed);
+        throw Exception(
+            result.errorMessage ?? AppLocalizations.of(context)!.saveFailed);
       }
     } catch (e) {
       if (!mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text(AppLocalizations.of(context)!.saveFailed(e.toString()))),
+        SnackBar(
+            content:
+                Text(AppLocalizations.of(context)!.saveFailed(e.toString()))),
       );
     } finally {
       if (mounted) {
@@ -288,7 +296,8 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: isDark ? Colors.black54 : Colors.white.withOpacity(0.7),
+        backgroundColor:
+            isDark ? Colors.black54 : Colors.white.withOpacity(0.7),
         elevation: 0,
         leading: IconButton(
           icon: Icon(
@@ -324,34 +333,34 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
           ),
           // 保存按钮
           IconButton(
-            icon: _isSaving 
-              ? Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    SizedBox(
-                      width: 24,
-                      height: 24,
-                      child: CircularProgressIndicator(
-                        value: _saveProgress > 0 ? _saveProgress : null,
-                        color: isDark ? Colors.white : Colors.black87,
-                        strokeWidth: 2,
-                      ),
-                    ),
-                    if (_saveProgress > 0)
-                      Text(
-                        '${(_saveProgress * 100).toInt()}%',
-                        style: TextStyle(
+            icon: _isSaving
+                ? Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(
+                          value: _saveProgress > 0 ? _saveProgress : null,
                           color: isDark ? Colors.white : Colors.black87,
-                          fontSize: 8,
-                          fontWeight: FontWeight.bold,
+                          strokeWidth: 2,
                         ),
                       ),
-                  ],
-                )
-              : Icon(
-                  Icons.download,
-                  color: isDark ? Colors.white : Colors.black87,
-                ),
+                      if (_saveProgress > 0)
+                        Text(
+                          '${(_saveProgress * 100).toInt()}%',
+                          style: TextStyle(
+                            color: isDark ? Colors.white : Colors.black87,
+                            fontSize: 8,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                    ],
+                  )
+                : Icon(
+                    Icons.download,
+                    color: isDark ? Colors.white : Colors.black87,
+                  ),
             onPressed: _isSaving ? null : _showResolutionDialog,
           ),
           // 分享按钮
@@ -379,9 +388,11 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
             child: LayoutBuilder(
               builder: (context, constraints) {
                 // 计算图片显示尺寸，保持原始比例
-                final screenAspectRatio = constraints.maxWidth / constraints.maxHeight;
-                final imageAspectRatio = widget.photo.width / widget.photo.height;
-                
+                final screenAspectRatio =
+                    constraints.maxWidth / constraints.maxHeight;
+                final imageAspectRatio =
+                    widget.photo.width / widget.photo.height;
+
                 double width, height;
                 if (screenAspectRatio > imageAspectRatio) {
                   height = constraints.maxHeight;
@@ -391,58 +402,39 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
                   height = width / imageAspectRatio;
                 }
 
-                return Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    // 低分辨率图片
-                    Hero(
-                      tag: 'photo_thumb_${widget.photo.id}',
-                      child: Container(
-                        width: width,
-                        height: height,
-                        child: CachedNetworkImage(
-                          imageUrl: widget.photo.url,
-                          fit: BoxFit.contain,
-                          placeholder: (context, url) => Container(
-                            color: isDark ? Colors.grey[900] : Colors.grey[200],
+                return SizedBox(
+                  width: width,
+                  height: height,
+                  child: PhotoView(
+                    imageProvider: _hasLoadedFull
+                        ? CachedNetworkImageProvider(
+                            widget.photo.fullUrl,
+                            cacheKey: 'full_${widget.photo.id}',
+                          )
+                        : CachedNetworkImageProvider(
+                            widget.photo.url,
+                            cacheKey: 'thumb_${widget.photo.id}',
                           ),
-                        ),
-                      ),
+                    controller: _controller,
+                    enableRotation: true,
+                    minScale: PhotoViewComputedScale.contained * 0.8,
+                    maxScale: PhotoViewComputedScale.covered * 3,
+                    initialScale: PhotoViewComputedScale.contained,
+                    backgroundDecoration: BoxDecoration(
+                      color: Colors.transparent,
                     ),
-
-                    // 高清图片（带渐变过渡）
-                    if (_hasLoadedFull)
-                      AnimatedOpacity(
-                        opacity: 1.0,
-                        duration: Duration(milliseconds: 300),
-                        child: Container(
-                          width: width,
-                          height: height,
-                          child: PhotoView(
-                            imageProvider: CachedNetworkImageProvider(
-                              widget.photo.fullUrl,
-                              cacheKey: 'full_${widget.photo.id}',
-                            ),
-                            controller: _controller,
-                            enableRotation: true,
-                            minScale: PhotoViewComputedScale.contained * 0.8,
-                            maxScale: PhotoViewComputedScale.covered * 3,
-                            initialScale: PhotoViewComputedScale.contained,
-                            backgroundDecoration: BoxDecoration(
-                              color: Colors.transparent,
-                            ),
-                            heroAttributes: PhotoViewHeroAttributes(
-                              tag: 'photo_full_${widget.photo.id}',
-                            ),
-                            scaleStateChangedCallback: (state) {
-                              // 可以在这里处理缩放状态改变的回调
-                            },
-                            basePosition: Alignment.center,
-                            gestureDetectorBehavior: HitTestBehavior.translucent,
-                          ),
-                        ),
-                      ),
-                  ],
+                    heroAttributes: PhotoViewHeroAttributes(
+                      tag: 'photo_${widget.photo.id}',
+                    ),
+                    loadingBuilder: (context, event) => Container(
+                      color: isDark ? Colors.grey[900] : Colors.grey[200],
+                    ),
+                    scaleStateChangedCallback: (state) {
+                      // 可以在这里处理缩放状态改变的回调
+                    },
+                    basePosition: Alignment.center,
+                    gestureDetectorBehavior: HitTestBehavior.translucent,
+                  ),
                 );
               },
             ),
@@ -450,52 +442,38 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
 
           // 加载进度指示器
           if (_isLoadingFull)
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 60,
-                    height: 60,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 6.0,
-                      valueColor: AlwaysStoppedAnimation<Color>(primaryColor),
-                      value: _downloadProgress > 0 ? _downloadProgress : null,
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    decoration: BoxDecoration(
-                      color: Colors.black54,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        if (_downloadProgress > 0) ...[
-                          Text(
-                            '${(_downloadProgress * 100).toInt()}%',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                        ],
-                        Text(
-                          'Loading HD',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                          ),
+            Positioned(
+              top: 16,
+              right: 16,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.black54,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    if (_downloadProgress > 0)
+                      Text(
+                        '${(_downloadProgress * 100).toInt()}%',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 12,
                         ),
-                      ],
+                      ),
+                    if (_downloadProgress > 0) SizedBox(width: 8),
+                    SizedBox(
+                      width: 16,
+                      height: 16,
+                      child: CircularProgressIndicator(
+                        strokeWidth: 2,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                        value: _downloadProgress > 0 ? _downloadProgress : null,
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
 
@@ -549,4 +527,4 @@ class _PhotoDetailPageState extends State<PhotoDetailPage> {
       ),
     );
   }
-} 
+}

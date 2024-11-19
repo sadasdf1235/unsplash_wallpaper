@@ -1,5 +1,5 @@
 /// 应用程序主题配置
-/// 
+///
 /// 提供：
 /// 1. 亮色主题配置
 /// 2. 暗色主题配置
@@ -33,7 +33,6 @@ class AppTheme {
       primary: primaryColor,
       secondary: primaryColor,
       surface: Colors.white,
-      background: Colors.white,
       onPrimary: Colors.black87,
     ),
 
@@ -64,13 +63,12 @@ class AppTheme {
   /// 暗色主题配置
   static ThemeData darkTheme = ThemeData.dark().copyWith(
     primaryColor: primaryColor,
-    
+
     // 暗色主题颜色方案
     colorScheme: ColorScheme.dark(
       primary: primaryColor,
       secondary: primaryColor,
       surface: Colors.grey.shade900,
-      background: Colors.black,
       onPrimary: Colors.black87,
     ),
 
@@ -100,4 +98,4 @@ class AppTheme {
       ),
     ),
   );
-} 
+}

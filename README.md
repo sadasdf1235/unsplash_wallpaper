@@ -1,4 +1,4 @@
-# Unsplash壁纸工具
+# Unsplash 壁纸工具
 
 一个使用 Flutter 开发的跨平台壁纸应用程序，支持从 Unsplash 获取高质量图片并设置为壁纸。
 
@@ -83,10 +83,3 @@ ios/ # iOS 平台相关配置
 └── Runner/
 └── Info.plist
 ```
-
-## 开发环境
-
-- Flutter 3.19.0
-- Dart 3.5.4
-- Android SDK 34.0.0
-- Xcode 15.0

@@ -43,7 +43,9 @@ class _WelcomePageState extends State<WelcomePage> {
       setState(() => _isLoading = false);
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(AppLocalizations.of(context)!.loadingError(e.toString()))),
+          SnackBar(
+              content: Text(
+                  AppLocalizations.of(context)!.loadingError(e.toString()))),
         );
       }
     }
@@ -88,7 +90,7 @@ class _WelcomePageState extends State<WelcomePage> {
             Stack(
               children: [
                 // 低分辨率图片
-                Container(
+                SizedBox(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   child: CachedNetworkImage(
@@ -106,7 +108,7 @@ class _WelcomePageState extends State<WelcomePage> {
                   AnimatedOpacity(
                     opacity: 1.0,
                     duration: Duration(milliseconds: 300),
-                    child: Container(
+                    child: SizedBox(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       child: CachedNetworkImage(
@@ -148,7 +150,9 @@ class _WelcomePageState extends State<WelcomePage> {
                     // 语言切换按钮
                     IconButton(
                       icon: Text(
-                        MyApp.of(context)?.locale.languageCode == 'zh' ? '中/En' : 'En/中',
+                        MyApp.of(context)?.locale.languageCode == 'zh'
+                            ? '中/En'
+                            : 'En/中',
                         style: TextStyle(
                           color: Colors.white,
                           fontSize: 14,
@@ -214,7 +218,8 @@ class _WelcomePageState extends State<WelcomePage> {
                           Navigator.pushReplacementNamed(context, '/home');
                         },
                         style: ElevatedButton.styleFrom(
-                          backgroundColor: Theme.of(context).colorScheme.primary,
+                          backgroundColor:
+                              Theme.of(context).colorScheme.primary,
                           foregroundColor: Colors.white,
                           padding: EdgeInsets.symmetric(
                             horizontal: 32.0,
@@ -279,4 +284,4 @@ class _WelcomePageState extends State<WelcomePage> {
       ),
     );
   }
-} 
+}

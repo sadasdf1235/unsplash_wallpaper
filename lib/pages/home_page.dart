@@ -22,22 +22,22 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   /// Unsplash API 服务
   final UnsplashService _unsplashService = UnsplashService();
-  
+
   /// 滚动控制器，用于监听滚动位置实现无限加载
   final ScrollController _scrollController = ScrollController();
-  
+
   /// 图片列表数据
-  List<UnsplashPhoto> _photos = [];
-  
+  final List<UnsplashPhoto> _photos = [];
+
   /// 当前选中的分类
   String _currentCategory = 'all';
-  
+
   /// 是否正在加载数据
   bool _isLoading = false;
-  
+
   /// 是否还有更多数据
   bool _hasMore = true;
-  
+
   /// 当前页码
   int _page = 1;
 
@@ -94,8 +94,8 @@ class _HomePageState extends State<HomePage> {
   /// 滚动监听处理
   /// 当滚动到距离底部500像素时，自动加载更多数据
   void _onScroll() {
-    if (_scrollController.position.pixels >= 
-        _scrollController.position.maxScrollExtent - 500 &&
+    if (_scrollController.position.pixels >=
+            _scrollController.position.maxScrollExtent - 500 &&
         !_isLoading &&
         _hasMore) {
       _loadPhotos();
@@ -103,7 +103,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// 加载图片数据
-  /// 
+  ///
   /// 处理流程：
   /// 1. 检查是否正在加载
   /// 2. 设置加载状态
@@ -120,7 +120,7 @@ class _HomePageState extends State<HomePage> {
         page: _page,
         perPage: 30,
       );
-      
+
       setState(() {
         _photos.addAll(photos);
         _page++;
@@ -137,9 +137,9 @@ class _HomePageState extends State<HomePage> {
   }
 
   /// 切换分类
-  /// 
+  ///
   /// [category] 目标分类名称
-  /// 
+  ///
   /// 处理流程：
   /// 1. 检查是否为当前分类
   /// 2. 清空现有数据
@@ -147,7 +147,7 @@ class _HomePageState extends State<HomePage> {
   /// 4. 重新加载数据
   Future<void> _changeCategory(String category) async {
     if (category == _currentCategory) return;
-    
+
     setState(() {
       _currentCategory = category;
       _photos.clear();
@@ -204,7 +204,7 @@ class _HomePageState extends State<HomePage> {
       body: Column(
         children: [
           // 分类按钮组
-          Container(
+          SizedBox(
             height: 50,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
@@ -230,7 +230,8 @@ class _HomePageState extends State<HomePage> {
                 ? MasonryGridView.builder(
                     padding: EdgeInsets.all(8),
                     itemCount: 10, // 显示10个骨架屏项目
-                    gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                    gridDelegate:
+                        SliverSimpleGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
                     ),
                     mainAxisSpacing: 8,
@@ -240,7 +241,8 @@ class _HomePageState extends State<HomePage> {
                       final random = index % 2 == 0 ? 1.2 : 0.8;
                       return ShimmerLoading(
                         width: double.infinity,
-                        height: MediaQuery.of(context).size.width * 0.5 * random,
+                        height:
+                            MediaQuery.of(context).size.width * 0.5 * random,
                       );
                     },
                   )
@@ -250,7 +252,8 @@ class _HomePageState extends State<HomePage> {
                         controller: _scrollController,
                         padding: EdgeInsets.all(8),
                         itemCount: _photos.length + (_hasMore ? 1 : 0),
-                        gridDelegate: SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                        gridDelegate:
+                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
                         ),
                         mainAxisSpacing: 8,
@@ -270,7 +273,7 @@ class _HomePageState extends State<HomePage> {
                               ),
                             );
                           }
-                          
+
                           final photo = _photos[index];
                           return GestureDetector(
                             onTap: () {
@@ -289,13 +292,17 @@ class _HomePageState extends State<HomePage> {
                                   fit: BoxFit.cover,
                                   placeholder: (context, url) => ShimmerLoading(
                                     width: double.infinity,
-                                    height: MediaQuery.of(context).size.width * 
-                                        0.5 * (photo.height / photo.width),
+                                    height: MediaQuery.of(context).size.width *
+                                        0.5 *
+                                        (photo.height / photo.width),
                                   ),
-                                  errorWidget: (context, url, error) => AspectRatio(
+                                  errorWidget: (context, url, error) =>
+                                      AspectRatio(
                                     aspectRatio: photo.width / photo.height,
                                     child: Container(
-                                      color: isDark ? Colors.grey[900] : Colors.grey[300],
+                                      color: isDark
+                                          ? Colors.grey[900]
+                                          : Colors.grey[300],
                                       child: Icon(Icons.error),
                                     ),
                                   ),
@@ -310,4 +317,4 @@ class _HomePageState extends State<HomePage> {
       ),
     );
   }
-} 
+}
