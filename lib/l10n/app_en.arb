@@ -1,0 +1,41 @@
+{
+  "appTitle": "Wallpaper Tool",
+  "startExplore": "Start Explore",
+  "categoryAll": "All",
+  "categoryNature": "Nature",
+  "categoryArchitecture": "Architecture",
+  "categoryTravel": "Travel",
+  "categoryAnimals": "Animals",
+  "categoryFood": "Food",
+  "categoryFashion": "Fashion",
+  "categoryArts": "Arts",
+  "loadingError": "Failed to load images: {error}",
+  "noImagesFound": "No images found",
+  "sharePhotoTitle": "Share a photo from Unsplash",
+  "photographer": "Photographer: {name}",
+  "photoLink": "Photo link: {url}",
+  "loadingFailed": "Image loading failed",
+  "@loadingError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "@photographer": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "@photoLink": {
+    "placeholders": {
+      "url": {}
+    }
+  },
+  "saveSuccess": "Image saved to gallery",
+  "saveFailed": "Save failed: {error}",
+  "permissionRequired": "Storage permission is required to save images",
+  "@saveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  }
+} 
