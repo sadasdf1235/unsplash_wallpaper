@@ -1,0 +1,41 @@
+{
+  "appTitle": "壁纸工具",
+  "startExplore": "开始探索",
+  "categoryAll": "全部",
+  "categoryNature": "自然",
+  "categoryArchitecture": "建筑",
+  "categoryTravel": "旅行",
+  "categoryAnimals": "动物",
+  "categoryFood": "美食",
+  "categoryFashion": "时尚",
+  "categoryArts": "艺术",
+  "loadingError": "加载图片失败: {error}",
+  "noImagesFound": "没有找到图片",
+  "sharePhotoTitle": "分享一张来自 Unsplash 的图片",
+  "photographer": "摄影师：{name}",
+  "photoLink": "图片链接：{url}",
+  "loadingFailed": "图片加载失败",
+  "saveSuccess": "图片已保存到相册",
+  "saveFailed": "保存失败: {error}",
+  "permissionRequired": "需要存储权限才能保存图片",
+  "@loadingError": {
+    "placeholders": {
+      "error": {}
+    }
+  },
+  "@photographer": {
+    "placeholders": {
+      "name": {}
+    }
+  },
+  "@photoLink": {
+    "placeholders": {
+      "url": {}
+    }
+  },
+  "@saveFailed": {
+    "placeholders": {
+      "error": {}
+    }
+  }
+} 
